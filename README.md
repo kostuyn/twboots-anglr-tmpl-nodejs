@@ -1,6 +1,6 @@
 # twboots-anglr-tmpl-nodejs
 ## Description
-Boilerplate TwitterBootstrap + angularjs for Nodejs.
+Boilerplate TwitterBootstrap + Angularjs with Jade template engine for Nodejs.
 
 ## How to use
 1. Fork this repository
