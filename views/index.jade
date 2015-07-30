@@ -1,0 +1,12 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+
+  my-directive(value='2')
+
+  ui-view
+
+  include ./templates/mainPage.jade
+  include ./directives/myDirective
