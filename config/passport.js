@@ -2,16 +2,17 @@ var LocalStrategy = require('passport-local').Strategy;
 var JwtStrategy = require('passport-jwt').Strategy;
 var jwt = require('jsonwebtoken');
 
-var User=require('../models/user');
+var config = require('../config');
+var User = require('../models/user');
 
 var opts = {}
-opts.secretOrKey = 'secret';
+opts.secretOrKey = config.get('jwt_secret');
 //opts.issuer = "accounts.examplesoft.com";
 //opts.audience: "yoursite.net";
 
-module.exports=function(passport){
-    passport.use(new JwtStrategy(opts, function(jwt_payload, done) {
-        User.findOne({id: jwt_payload.sub}, function(err, user) {
+module.exports = function (passport) {
+    passport.use(new JwtStrategy(opts, function (jwt_payload, done) {
+        User.findById(jwt_payload.user._id, function (err, user) {
             if (err) {
                 return done(err, false);
             }
@@ -19,7 +20,6 @@ module.exports=function(passport){
                 done(null, user);
             } else {
                 done(null, false);
-                // or you could create a new account
             }
         });
     }));
@@ -40,20 +40,24 @@ module.exports=function(passport){
                 } else {
                     var newUser = new User();
                     newUser.local.email = email;
-                    newUser.local.password = newUser.generateHash(password);
-
-                    newUser.save(function (err) {
+                    newUser.generateHash(password, function (err, hash) {
                         if (err)
-                            throw err;
+                            return done(err);
 
-                        return done(null, newUser);
+                        newUser.local.password = hash;
+                        newUser.save(function (err) {
+                            if (err)
+                                return done(err);
+
+                            return done(null, newUser);
+                        });
                     });
                 }
             });
         }));
     }));
 
-    passport.use('local-login', new LocalStrategy({
+    passport.use('local-signin', new LocalStrategy({
         usernameField: 'email',
         passwordField: 'password',
         passReqToCallback: true
@@ -63,13 +67,19 @@ module.exports=function(passport){
                 return done(err);
 
             if (!user)
-                //return done(null, false, req.flash('loginMessage', 'No user found.'));
-                return done(null, false);
-            if (!user.validPassword(password))
-                //return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.'));
+            //return done(null, false, req.flash('loginMessage', 'No user found.'));
                 return done(null, false);
 
-            return done(null, user);
+            user.validatePassword(password, function (err, isValid) {
+                if (err)
+                    return done(err);
+
+                if (isValid) {
+                    done(null, user);
+                } else {
+                    done(null, false);
+                }
+            });
         });
     }));
 };

@@ -1,0 +1,5 @@
+{
+  "environment": "development",
+  "jwt_secret": "my jwt secret key",
+  "mongo_connection":"mongodb://localhost/tmp-base"
+}

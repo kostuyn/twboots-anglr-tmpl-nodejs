@@ -5,13 +5,20 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var passport = require('passport');
+var mongoose=require('mongoose');
 
 var config = require('./config');
 var routes = require('./routes/index')(passport);
 var users = require('./routes/users');
 
+mongoose.connect(config.get('mongo_connection'));
 require('./config/passport')(passport);
 var app = express();
+
+console.log(config.get('my_env'));
+console.log(config.get('MY_env'));
+console.log(config.get('token_secret'));
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -27,7 +34,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(passport.initialize());
 
-app.use('/', routes);
+app.use('/api', routes);
 app.use('/users', users);
 
 // catch 404 and forward to error handler

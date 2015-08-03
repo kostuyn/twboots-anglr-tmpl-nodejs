@@ -8,17 +8,17 @@ var userSchema = mongoose.Schema({
     }
 });
 
-userSchema.methods.generateHash = function (password) {
-    bcrypt.genSalt(8, function (salt) {
-        bcrypt.hash(password, salt, null, function (hash) {
-            callback(hash);
+userSchema.methods.generateHash = function (password, callback) {
+    bcrypt.genSalt(8, function (err, salt) {
+        bcrypt.hash(password, salt, null, function (err, hash) {
+            callback(err, hash);
         });
     });
 };
 
-userSchema.methods.validatedPassword = function (password) {
-    bcrypt.compare(password, this.local.password, function (result) {
-        callback(result);
+userSchema.methods.validatePassword = function (password, callback) {
+    bcrypt.compare(password, this.local.password, function (err, result) {
+        callback(err, result);
     });
 };
 

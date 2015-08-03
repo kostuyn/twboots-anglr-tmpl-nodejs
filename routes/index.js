@@ -1,17 +1,46 @@
 var express = require('express');
+var jwtGenerator = require('../middleware/jwtGenerator');
+
 var router = express.Router();
 
-/* GET home page. */
-module.exports=function(passport){
-  router.post('/login', passport.authenticate('jwt', { session: false}),
-      function(req, res) {
-        res.send(req.user);
-      }
-  );
+function mapUser(user) {
+    return {
+        id:user._id,
+        email:user.local.email
+    }
+}
 
-  router.get('/', function(req, res, next) {
-    res.render('index', { title: 'Express' });
-  });
+module.exports = function (passport) {
+    router.get('/profile',
+        passport.authenticate('jwt', {session: false}),
+        function (req, res) {
+            var user=mapUser(req.user);
+            res.send(user);
+        }
+    );
 
-  return router;
+    router.get('/', function (req, res) {
+        res.render('index', {title: 'Express'});
+    });
+
+    router.post('/signup',
+        [
+            passport.authenticate('local-signup', {session: false}),
+            jwtGenerator
+        ],
+        function (req, res) {
+            res.status(201);
+            res.send({jwt: res.locals.jwtToken});
+        });
+
+    router.post('/login',
+        [
+            passport.authenticate('local-signin', {session: false}),
+            jwtGenerator
+        ],
+        function (req, res) {
+            res.send({jwt: res.locals.jwtToken});
+        });
+
+    return router;
 };
