@@ -16,10 +16,6 @@ function mapUser(user) {
 }
 
 module.exports = function (passport) {
-    router.get('/', function (req, res) {
-        res.render('index', {title: 'Express'});
-    });
-
     router.get('/profile',
         passport.authenticate('access-token', {session: false}),
         function (req, res) {
@@ -57,7 +53,6 @@ module.exports = function (passport) {
 
     router.post('/signin', [
         passport.authenticate('local-signin', {session: false}),
-        deleteRefreshToken,
         createRefreshToken,
         createAccessToken,
         updateUser
