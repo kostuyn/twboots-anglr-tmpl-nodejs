@@ -28,3 +28,7 @@ node_modules
 
 # WebStorm
 .idea
+
+/public/fonts
+/public/js
+/public/css
