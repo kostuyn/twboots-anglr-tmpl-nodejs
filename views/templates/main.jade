@@ -1,0 +1,9 @@
+script(type='text/ng-template' id='main.html')
+   h3(ng-bind='title')
+   button(ng-click='hello(title)') Go
+   my-directive(value='3')
+
+   ul
+      li(ng-repeat='item in items')
+         h3(ng-bind='item.title')
+         p(ng-bind-template='Description {{item.description}}')

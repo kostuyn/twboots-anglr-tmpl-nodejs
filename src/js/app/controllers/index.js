@@ -1,0 +1,1 @@
+angular.module('controllers', ['ctrl.main', 'ctrl.item']);

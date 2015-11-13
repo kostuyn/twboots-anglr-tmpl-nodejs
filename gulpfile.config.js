@@ -2,9 +2,7 @@ var GulpConfig = function () {
     this.source = './src/';
     this.appSources = [
         this.source + 'js/app/*.js',
-        this.source + 'js/app/services/*.js',
-        this.source + 'js/app/directives/*.js',
-        this.source + 'js/app/controllers/*.js'
+        this.source + 'js/app/*/*.js'
     ];
     this.sourceCss = [
         this.source + 'css/*.css'
