@@ -1,4 +1,4 @@
-angular.module('services', ['resources.data'])
+angular.module('services.myService', ['resources.data'])
     .factory('itemService', ['items', function (items) {
         return {
             get: function () {

@@ -21,9 +21,18 @@ gulp.task('libs', function () {
 gulp.task('app', function () {
     return gulp.src(config.appSources)
         //.pipe(newer(config.outputJs + config.allApp))
-        .pipe(concat(config.allApp))
         .pipe(sourcemaps.init())
+        .pipe(concat(config.allApp))
         .pipe(uglify())
+        .pipe(sourcemaps.write())
+        .pipe(gulp.dest(config.outputJs));
+});
+
+gulp.task('app-debug', function () {
+    return gulp.src(config.appSources)
+        //.pipe(newer(config.outputJs + config.allApp))
+        .pipe(sourcemaps.init())
+        .pipe(concat(config.allApp))
         .pipe(sourcemaps.write())
         .pipe(gulp.dest(config.outputJs));
 });
@@ -55,3 +64,4 @@ gulp.task('bootstrap fonts', function () {
 });
 
 gulp.task('default', ['libs', 'app', 'styles', 'libStyles', 'bootstrap fonts']);
+gulp.task('debug', ['libs', 'app-debug', 'styles', 'libStyles', 'bootstrap fonts']);

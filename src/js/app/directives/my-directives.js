@@ -1,4 +1,4 @@
-angular.module('directives', [])
+angular.module('directives.myDirective', [])
     .directive('myDirective', [function () {
         return {
             restrict: 'AE',
