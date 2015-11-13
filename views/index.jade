@@ -1,12 +1,8 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
 
-  my-directive(value='2')
-
-  div(ui-view)
+  ui-view
 
   include templates/main
   include templates/item

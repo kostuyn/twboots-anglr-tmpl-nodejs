@@ -1,9 +1,42 @@
 script(type='text/ng-template' id='main.html')
-   h3(ng-bind='title')
-   button(ng-click='hello(title)') Go
-   my-directive(value='3')
+ // Header Starts
+ #top-nav.navbar.navbar-inverse.navbar-fixed-top.animated.fadeInDown(role='navigation')
+   .container
+     .navbar-header
+       // Logo Starts
+       a.navbar-brand(href='#home')
+         img(src='/content/images/alien-logo-text.png', height='30', alt='logo')
+       // #Logo Ends
+       button.navbar-toggle.collapsed(type='button', ng-click='isOpen = !isOpen')
+         span.sr-only Toggle navigation
+         span.icon-bar
+         span.icon-bar
+         span.icon-bar
+     // Nav Starts
+     .navbar-collapse.collapse(uib-collapse='!isOpen')
+       ul.nav.navbar-nav.navbar-right
+         li(du-scrollspy='home')
+           a(href='#home', du-smooth-scroll='', ng-click='isOpen = false') Начало
+         li(du-scrollspy='popular')
+           a(href='#popular', du-smooth-scroll='', ng-click='isOpen = false') Популярные
+         li(du-scrollspy='catalog')
+           a(href='#catalog', du-smooth-scroll='', ng-click='isOpen = false') Каталог
+         li(du-scrollspy='delivery')
+           a(href='#delivery', du-smooth-scroll='', ng-click='isOpen = false') Доставка
+         li(du-scrollspy='about')
+           a(href='#about', du-smooth-scroll='', ng-click='isOpen = false') О голографии
+         li
+           a(href='', style='color:yellowgreen;', ng-click='isOpen = false; showCart()')
+             span.glyphicon.glyphicon-shopping-cart.success
+             span.success Корзина
+     // #Nav Ends
 
-   ul
-      li(ng-repeat='item in items')
-         h3(ng-bind='item.title')
-         p(ng-bind-template='Description {{item.description}}')
+
+ h3(ng-bind='title')
+ button(ng-click='hello(title)') Go
+ my-directive(value='3')
+
+ ul
+    li(ng-repeat='item in items')
+       h3(ng-bind='item.title')
+       p(ng-bind-template='Description {{item.description}}')

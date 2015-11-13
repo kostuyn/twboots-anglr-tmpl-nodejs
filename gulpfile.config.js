@@ -11,8 +11,9 @@ var GulpConfig = function () {
     this.modules = './node_modules/';
     this.moduleLibs = [
         this.modules + 'jquery/dist/jquery.js',
-        this.modules + 'bootstrap/dist/js/bootstrap.js',
         this.modules + 'angular/angular.js',
+        this.modules + 'angular/angular-animate.js',
+        this.modules + 'angular-ui-bootstrap/ui-bootstrap-tpls.js',
         this.modules + 'angular-ui-router/release/angular-ui-router.js'
     ];
     this.moduleStyles = [
