@@ -1,4 +1,10 @@
 script(type='text/ng-template' id='main.html')
+
+  img(src='/img/frame3.jpg', style={position:'fixed', width: '100%', top: '50px', left: 0, 'z-index': -1})
+  .container-fluid
+    .row
+      .col-lg-12
+        img(src='/img/main-logo-sm.png', style={width: '100%'})
   // Header Starts
   #top-nav.navbar.navbar-inverse.navbar-fixed-top.animated.fadeInDown(role='navigation')
    .container
@@ -31,7 +37,7 @@ script(type='text/ng-template' id='main.html')
              span.success Корзина
      // #Nav Ends
 
-  .container-fluid
+  .container-fluid(style={background: 'white', 'padding-top':'50px'})
     .row
       .col-lg-4(ng-repeat='item in items')
         .thumbnail
