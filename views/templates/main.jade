@@ -1,11 +1,11 @@
 script(type='text/ng-template' id='main.html')
- // Header Starts
- #top-nav.navbar.navbar-inverse.navbar-fixed-top.animated.fadeInDown(role='navigation')
+  // Header Starts
+  #top-nav.navbar.navbar-inverse.navbar-fixed-top.animated.fadeInDown(role='navigation')
    .container
      .navbar-header
        // Logo Starts
        a.navbar-brand(href='#home')
-         img(src='/content/images/alien-logo-text.png', height='30', alt='logo')
+         img(src='/img/logo.png', height='30', alt='logo')
        // #Logo Ends
        button.navbar-toggle.collapsed(type='button', ng-click='isOpen = !isOpen')
          span.sr-only Toggle navigation
@@ -31,12 +31,14 @@ script(type='text/ng-template' id='main.html')
              span.success Корзина
      // #Nav Ends
 
+  .container-fluid
+    .row
+      .col-lg-4(ng-repeat='item in items')
+        .thumbnail
+          h3(ng-bind='item.title')
+          p(ng-bind-template='Description {{item.description}}')
 
  h3(ng-bind='title')
  button(ng-click='hello(title)') Go
  my-directive(value='3')
 
- ul
-    li(ng-repeat='item in items')
-       h3(ng-bind='item.title')
-       p(ng-bind-template='Description {{item.description}}')
